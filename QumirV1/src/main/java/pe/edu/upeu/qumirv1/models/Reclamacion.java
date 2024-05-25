@@ -1,79 +1,39 @@
 package pe.edu.upeu.qumirv1.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ *
+ * @author Fernando
+ */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
-@Table(name = "Reclamaciones")
+@Table(name = "Reclamacion")
 public class Reclamacion {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reclamacion")
-    private Long idReclamacion;
+    private Long id;
 
-    @Column(name = "id_usuario")
-    private Long idUsuario;
+    @Column(name = "id_usuario", nullable = false, length = 255)
+    private String id_usuario;
 
-    @Column(name = "id_recompensa")
-    private Long idRecompensa;
+    @Column(name = "id_recompensa", nullable = false, length = 255)
+    private String id_recompensa;
 
-    @Column(name = "fecha_reclamacion")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fecha_reclamacion", nullable = false)
     private LocalDateTime fechaReclamacion;
 
-    @Column(name = "estado", length = 50)
+    @Column(name = "estado", nullable = false, length = 255)
     private String estado;
 
-    // Constructor, getters y setters
 
-    public Reclamacion() {
-    }
-
-    public Reclamacion(Long idUsuario, Long idRecompensa, LocalDateTime fechaReclamacion, String estado) {
-        this.idUsuario = idUsuario;
-        this.idRecompensa = idRecompensa;
-        this.fechaReclamacion = fechaReclamacion;
-        this.estado = estado;
-    }
-
-    public Long getIdReclamacion() {
-        return idReclamacion;
-    }
-
-    public void setIdReclamacion(Long idReclamacion) {
-        this.idReclamacion = idReclamacion;
-    }
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public Long getIdRecompensa() {
-        return idRecompensa;
-    }
-
-    public void setIdRecompensa(Long idRecompensa) {
-        this.idRecompensa = idRecompensa;
-    }
-
-    public LocalDateTime getFechaReclamacion() {
-        return fechaReclamacion;
-    }
-
-    public void setFechaReclamacion(LocalDateTime fechaReclamacion) {
-        this.fechaReclamacion = fechaReclamacion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 }
