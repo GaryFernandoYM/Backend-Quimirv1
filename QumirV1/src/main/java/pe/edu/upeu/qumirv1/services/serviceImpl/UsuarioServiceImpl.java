@@ -77,4 +77,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioRepo.save(usuarioExistente);
     }
+
 }
