@@ -85,4 +85,5 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioExistente.setCorreo(usuario.getCorreo());
         return usuarioRepo.save(usuarioExistente);
     }
+
 }
