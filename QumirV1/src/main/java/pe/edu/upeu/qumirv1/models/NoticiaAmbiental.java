@@ -30,8 +30,7 @@ public class NoticiaAmbiental {
     @Column(name = "contenido", nullable = false, columnDefinition = "TEXT")
     private String contenido;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "fecha_publicacion", nullable = false)
-    private LocalDateTime fechaPublicacion;
+    @Column(name = "fechaPublicacion", nullable = false, columnDefinition = "TEXT")
+    private String fechaPublicacion;
 
 }

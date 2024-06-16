@@ -19,6 +19,10 @@ public class Usuario {
 
     private String correo;
     private String password;
+    public Object getEmail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+    }
 
     // Getters y Setters
     // Constructor

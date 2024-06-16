@@ -30,9 +30,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario findByCorreoAndPassword(String correo, String password) {
+        Optional<Usuario> optionalUsuario = usuarioRepo.findByCorreo(correo);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            if (passwordEncoder.matches(password, usuario.getPassword())) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Usuario save(Usuario usuario) {
         try {
-            // Codificar la contraseña antes de guardarla
             String hashedPassword = passwordEncoder.encode(usuario.getPassword());
             usuario.setPassword(hashedPassword);
             return usuarioRepo.save(usuario);
@@ -58,7 +69,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepo.delete(usuario);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", true);
-
         return response;
     }
 
@@ -73,8 +83,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuarioExistente = usuarioRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
         usuarioExistente.setCorreo(usuario.getCorreo());
-        // No actualizar la contraseña aquí para evitar su re-hashing
-
         return usuarioRepo.save(usuarioExistente);
     }
 }

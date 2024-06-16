@@ -1,6 +1,5 @@
 package pe.edu.upeu.qumirv1.services;
 
-import pe.edu.upeu.qumirv1.models.Reclamacion;
 import pe.edu.upeu.qumirv1.models.Usuario;
 
 import java.util.List;
@@ -12,4 +11,5 @@ public interface UsuarioService {
     Map<String, Boolean> delete(Long id);
     Usuario getUsuarioById(Long id);
     Usuario update(Usuario usuario, Long id);
+    Usuario findByEmailAndPassword(Object object, String password); // Corregido el nombre del método
 }
