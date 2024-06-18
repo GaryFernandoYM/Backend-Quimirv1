@@ -1,40 +1,32 @@
 package pe.edu.upeu.qumirv1.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+//no es necesario poner el nombre de la tabla ya que por defecto se pone 
+//si quieres que el modelo se cree con diferente nombre en ese caso si deverias poner el nombre de la tabla
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Entity
-@Table(name = "Recompensas")
-public class Recompensa {
+import jakarta.persistence.*;
+import lombok.Data;
+import java.sql.Date;
 
+@Entity
+@Data
+public class Recompensa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "nombre_recompensa", nullable = false, length = 100)
-    private String nombreRecompensa;
-
-    @Column(name = "descripcion", columnDefinition = "TEXT")
+    private Integer id;
+    private String nombre_recompensa;
     private String descripcion;
+    private String puntos_necesarios;
+    private String foto;
+    private Date fecha_creacion;
+    private Date fecha_expiracion;
 
-    @Column(name = "puntos_necesarios", nullable = false)
-    private int puntosNecesarios;
+    private LocalDateTime created_at = LocalDateTime.now();
+    private LocalDateTime updated_at = LocalDateTime.now();
 
-   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "fecha_creacion", nullable = false, updatable = false)
-    private String fechaCreacion;
-    //LocalDateTime
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "fecha_expiracion", nullable = false)
-    private LocalDate fechaExpiracion;
+    @PreUpdate
+    private void preUpdate() {
+        updated_at = LocalDateTime.now();
+    }
 }
