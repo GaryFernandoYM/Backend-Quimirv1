@@ -20,25 +20,13 @@ import java.util.Optional;
 @Transactional
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private final UsuarioRepository usuarioRepo;
-    private final PasswordEncoder passwordEncoder;
+    public final UsuarioRepository usuarioRepo;
+    public final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UsuarioServiceImpl(UsuarioRepository usuarioRepo, PasswordEncoder passwordEncoder) {
         this.usuarioRepo = usuarioRepo;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public Usuario findByCorreoAndPassword(String correo, String password) {
-        Optional<Usuario> optionalUsuario = usuarioRepo.findByCorreo(correo);
-        if (optionalUsuario.isPresent()) {
-            Usuario usuario = optionalUsuario.get();
-            if (passwordEncoder.matches(password, usuario.getPassword())) {
-                return usuario;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -84,6 +72,12 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
         usuarioExistente.setCorreo(usuario.getCorreo());
         return usuarioRepo.save(usuarioExistente);
+    }
+
+    @Override
+    public Usuario findByEmailAndPassword(Object object, String password) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByEmailAndPassword'");
     }
 
 }
