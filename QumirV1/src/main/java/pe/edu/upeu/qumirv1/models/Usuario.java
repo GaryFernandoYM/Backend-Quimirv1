@@ -1,29 +1,22 @@
 package pe.edu.upeu.qumirv1.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "usuarios")
 @Data
-
-@Table(name = "Usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String correo;
-    private String password;
-    public Object getEmail() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
-    }
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    // Getters y Setters
-    // Constructor
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String fullName;
 }
