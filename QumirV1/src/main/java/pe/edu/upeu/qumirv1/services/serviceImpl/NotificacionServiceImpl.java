@@ -46,7 +46,7 @@ public class NotificacionServiceImpl implements NotificacionService {
                 Usuario usuario = usuarioService.getUsuarioById(notificacion.getUsuario().getId());
                 System.out.println("Después de la petición");
                 System.out.println(usuario.toString());
-                System.out.println(usuario.getCorreo());
+                System.out.println(usuario.getEmail());
                 System.out.println(usuario.getId());
                 notificacion.setUsuario(usuario);
             } catch (ResourceNotFoundException e) {

@@ -46,7 +46,7 @@ public class AsistenciaServiceImpl implements AsistenciaService {
                 Usuario usuario = usuarioService.getUsuarioById(asistencia.getUsuario().getId());
                 System.out.println("Después de la petición");
                 System.out.println(usuario.toString());
-                System.out.println(usuario.getCorreo());
+                System.out.println(usuario.getEmail());
                 System.out.println(usuario.getId());
                 asistencia.setUsuario(usuario);
             } catch (ResourceNotFoundException e) {
