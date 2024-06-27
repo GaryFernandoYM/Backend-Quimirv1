@@ -1,9 +1,9 @@
 package pe.edu.upeu.qumirv1.services;
 
+import pe.edu.upeu.qumirv1.models.Categoria;
+
 import java.util.List;
 import java.util.Map;
-
-import pe.edu.upeu.qumirv1.models.Categoria;
 
 public interface CategoriaService {
     Categoria save(Categoria categoria);

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 @AllArgsConstructor
@@ -33,7 +32,7 @@ public class EventoCategoria {
     @Embeddable
     public static class EventoCategoriaId implements Serializable {
 
-        private static final long serialVersionUId = 1L;
+        private static final long serialVersionUID = 1L;
 
         @Column(name = "id_evento")
         private Long idEvento;

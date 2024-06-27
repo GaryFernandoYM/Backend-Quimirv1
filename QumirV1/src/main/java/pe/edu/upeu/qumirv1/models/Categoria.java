@@ -1,12 +1,9 @@
 package pe.edu.upeu.qumirv1.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +16,6 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombrecategoria", nullable = false)
-    private String nombrecategoria;
-
-
+    @Column(name = "nombre_categoria", nullable = false)
+    private String nombreCategoria;
 }

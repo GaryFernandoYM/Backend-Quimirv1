@@ -1,12 +1,8 @@
 package pe.edu.upeu.qumirv1.services.serviceImpl;
 
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pe.edu.upeu.qumirv1.exceptions.AppException;
-import pe.edu.upeu.qumirv1.exceptions.ResourceNotFoundException;
 import pe.edu.upeu.qumirv1.models.EventoCategoria;
 import pe.edu.upeu.qumirv1.models.EventoCategoria.EventoCategoriaId;
 import pe.edu.upeu.qumirv1.repositories.EventoCategoriaRepository;
@@ -15,64 +11,52 @@ import pe.edu.upeu.qumirv1.services.EventoCategoriaService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-@Transactional
 public class EventoCategoriaServiceImpl implements EventoCategoriaService {
 
     @Autowired
-    private final EventoCategoriaRepository eventoCategoriaRepo;
+    private EventoCategoriaRepository eventoCategoriaRepository;
 
     @Override
     public EventoCategoria save(EventoCategoria eventoCategoria) {
-        try {
-            return eventoCategoriaRepo.save(eventoCategoria);
-        } catch (Exception e) {
-            throw new AppException("Error-" + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return eventoCategoriaRepository.save(eventoCategoria);
     }
 
     @Override
     public List<EventoCategoria> findAll() {
-        try {
-            return eventoCategoriaRepo.findAll();
-        } catch (Exception e) {
-            throw new AppException("Error-" + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return eventoCategoriaRepository.findAll();
     }
 
     @Override
     public Map<String, Boolean> delete(EventoCategoriaId id) {
-        EventoCategoria eventoCategoria = eventoCategoriaRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("EventoCategoria no existe con id: " + id));
-
-        eventoCategoriaRepo.delete(eventoCategoria);
+        Optional<EventoCategoria> eventoCategoria = eventoCategoriaRepository.findById(id);
         Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", true);
-
+        if (eventoCategoria.isPresent()) {
+            eventoCategoriaRepository.delete(eventoCategoria.get());
+            response.put("deleted", Boolean.TRUE);
+        } else {
+            response.put("deleted", Boolean.FALSE);
+        }
         return response;
     }
 
     @Override
     public EventoCategoria getEventoCategoriaById(EventoCategoriaId id) {
-        return eventoCategoriaRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("EventoCategoria no existe con id: " + id));
+        return eventoCategoriaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public EventoCategoria update(EventoCategoria eventoCategoriaDetails, EventoCategoriaId id) {
-        EventoCategoria eventoCategoria = eventoCategoriaRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("EventoCategoria no existe con id: " + id));
-
-        // Actualizar los campos necesarios
-        eventoCategoria.setEvento(eventoCategoriaDetails.getEvento());
-        eventoCategoria.setCategoria(eventoCategoriaDetails.getCategoria());
-
-        try {
-            return eventoCategoriaRepo.save(eventoCategoria);
-        } catch (Exception e) {
-            throw new AppException("Error-" + e.getMessage(), HttpStatus.BAD_REQUEST);
+    public EventoCategoria update(EventoCategoria eventoCategoria, EventoCategoriaId id) {
+        Optional<EventoCategoria> existingEventoCategoria = eventoCategoriaRepository.findById(id);
+        if (existingEventoCategoria.isPresent()) {
+            EventoCategoria updatedEventoCategoria = existingEventoCategoria.get();
+            updatedEventoCategoria.setEvento(eventoCategoria.getEvento());
+            updatedEventoCategoria.setCategoria(eventoCategoria.getCategoria());
+            return eventoCategoriaRepository.save(updatedEventoCategoria);
+        } else {
+            return null;
         }
     }
 }
