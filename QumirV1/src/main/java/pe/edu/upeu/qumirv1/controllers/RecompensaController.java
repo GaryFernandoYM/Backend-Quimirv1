@@ -1,48 +1,44 @@
 package pe.edu.upeu.qumirv1.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pe.edu.upeu.qumirv1.models.Recompensa;
-import pe.edu.upeu.qumirv1.services.RecompensaService;
-
-
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import pe.edu.upeu.qumirv1.models.Recompensa;
+import pe.edu.upeu.qumirv1.services.RecompensaService;
+
 @RestController
-@RequestMapping("/qumir/recompensa")
+@RequestMapping("/recompensa")
 public class RecompensaController {
     @Autowired
     private RecompensaService recompensaService;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Recompensa>> listRecompensas() {
-        List<Recompensa> recompensas = recompensaService.findAll();
-        return ResponseEntity.ok(recompensas);
+    @GetMapping()
+    public ResponseEntity<List<Recompensa>> list() {
+        return ResponseEntity.ok().body(recompensaService.listar());
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<Recompensa> createRecompensa(@RequestBody Recompensa recompensa) {
-        Recompensa data = recompensaService.save(recompensa);
-        return ResponseEntity.ok(data);
+    @PostMapping()
+    public ResponseEntity<Recompensa> save(@RequestBody Recompensa recompensa) {
+        return ResponseEntity.ok(recompensaService.guardar(recompensa));
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Recompensa> getRecompensaById(@PathVariable Long id) {
-        Recompensa recompensa = recompensaService.getRecompensaById(id);
-        return ResponseEntity.ok(recompensa);
+    @PutMapping()
+    public ResponseEntity<Recompensa> update(@RequestBody Recompensa recompensa) {
+        return ResponseEntity.ok(recompensaService.actualizar(recompensa));
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteRecompensa(@PathVariable Long id) {
-        Map<String, Boolean> response = recompensaService.delete(id);
-        return ResponseEntity.ok(response);
+    @GetMapping("/{id}")
+    public ResponseEntity<Recompensa> listById(@PathVariable(required = true) Integer id) {
+        return ResponseEntity.ok().body(recompensaService.listarPorId(id).get());
     }
 
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<Recompensa> updateRecompensa(@PathVariable Long id, @RequestBody Recompensa recompensaDetails) {
-        Recompensa updatedRecompensa = recompensaService.update(recompensaDetails, id);
-        return ResponseEntity.ok(updatedRecompensa);
+    @DeleteMapping("/{id}")
+    public String deleteById(@PathVariable(required = true) Integer id) {
+        recompensaService.eliminarPorId(id);
+        return "Eliminacion Correcta";
     }
 }

@@ -30,7 +30,7 @@ public class Comentario {
     private Long id;
 
     @Column(name = "id_usuario", nullable = false)
-    private Integer idUsuario;
+    private Integer     idUsuario;
 
     @Column(name = "id_evento")
     private Integer idEvento;

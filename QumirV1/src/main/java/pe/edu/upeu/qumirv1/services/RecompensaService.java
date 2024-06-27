@@ -1,15 +1,19 @@
 package pe.edu.upeu.qumirv1.services;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import pe.edu.upeu.qumirv1.models.Recompensa;
 
 public interface RecompensaService {
-    Recompensa save(Recompensa recompensa);
 
-    List<Recompensa> findAll();
-    Map<String, Boolean> delete(Long id);
-    Recompensa getRecompensaById(Long id);
-    Recompensa update(Recompensa recompensa, Long id);
+    public List<Recompensa> listar();
+
+    public Recompensa guardar(Recompensa recompensa);
+
+    public Recompensa actualizar(Recompensa recompensa);
+
+    public Optional<Recompensa> listarPorId(Integer id);
+
+    public void eliminarPorId(Integer id);
 }

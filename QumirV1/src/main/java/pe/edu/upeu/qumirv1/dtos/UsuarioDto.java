@@ -1,24 +1,35 @@
 package pe.edu.upeu.qumirv1.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class UsuarioDto {
+    private String email;
+    private String password;
+    private String fullName;
 
-    private Long id;
-    private String nombres;
-    private String apellidos;
-    private String correo;
-    private String token;
-    private String dni;
-    private String perfilPrin;
-    private String estado;
-    private String offlinex;
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

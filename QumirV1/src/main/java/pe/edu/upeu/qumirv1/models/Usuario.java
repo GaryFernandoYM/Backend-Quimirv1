@@ -1,25 +1,22 @@
 package pe.edu.upeu.qumirv1.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "usuarios")
 @Data
-
-@Table(name = "Usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String correo;
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
-    // Getters y Setters
-    // Constructor
+    @Column(nullable = false)
+    private String fullName;
 }
