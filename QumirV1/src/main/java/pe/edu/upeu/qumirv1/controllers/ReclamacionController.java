@@ -1,53 +1,52 @@
 package pe.edu.upeu.qumirv1.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pe.edu.upeu.qumirv1.models.NoticiaAmbiental;
-import pe.edu.upeu.qumirv1.models.Reclamacion;
-import pe.edu.upeu.qumirv1.services.NoticiaAmbientalService;
-import pe.edu.upeu.qumirv1.services.ReclamacionService;
-
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Fernando
- */
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import pe.edu.upeu.qumirv1.models.Asistencia;
+import pe.edu.upeu.qumirv1.models.Reclamacion;
+import pe.edu.upeu.qumirv1.services.ReclamacionService;
+
 @RestController
-@RequestMapping("/qumir/reclamacion")
+@RequestMapping("/reclamacion")
 public class ReclamacionController {
+
     @Autowired
     private ReclamacionService reclamacionService;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Reclamacion>> listEventos() {
-        List<Reclamacion> reclamacions = reclamacionService.findAll();
-        return ResponseEntity.ok(reclamacions);
-    }
-
-    @PostMapping("/crear")
-    public ResponseEntity<Reclamacion> createEvento(@RequestBody Reclamacion reclamacion) {
-        Reclamacion data = reclamacionService.save(reclamacion);
-        return ResponseEntity.ok(data);
-    }
-
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Reclamacion> getEventoById(@PathVariable Long id) {
-        Reclamacion reclamacion = reclamacionService.getReclamacionById(id);
+    @GetMapping("/asistenciaPorUsuario/{idUsuario}")
+    public ResponseEntity<List<Reclamacion>> listarAsistenciasPorUsuario(@PathVariable Integer idUsuario) {
+        List<Reclamacion> reclamacion = reclamacionService.listarPorUsuario(idUsuario);
         return ResponseEntity.ok(reclamacion);
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteEvento(@PathVariable Long id) {
-        Map<String, Boolean> response = reclamacionService.delete(id);
-        return ResponseEntity.ok(response);
+    @GetMapping()
+    public ResponseEntity<List<Reclamacion>> list() {
+        return ResponseEntity.ok().body(reclamacionService.listar());
     }
 
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<Reclamacion> updateEvento(@PathVariable Long id, @RequestBody Reclamacion reclamacionDetails) {
-        Reclamacion updatedEvento = reclamacionService.update(reclamacionDetails, id);
-        return ResponseEntity.ok(updatedEvento);
+    @PostMapping()
+    public ResponseEntity<Reclamacion> save(@RequestBody Reclamacion Reclamacion) {
+        return ResponseEntity.ok(reclamacionService.guardar(Reclamacion));
+    }
+
+    @PutMapping()
+    public ResponseEntity<Reclamacion> update(@RequestBody Reclamacion Reclamacion) {
+        return ResponseEntity.ok(reclamacionService.actualizar(Reclamacion));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reclamacion> listById(@PathVariable(required = true) Integer id) {
+        return ResponseEntity.ok().body(reclamacionService.listarPorId(id).get());
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteById(@PathVariable(required = true) Integer id) {
+        reclamacionService.eliminarPorId(id);
+        return "Eliminacion Correcta";
     }
 }

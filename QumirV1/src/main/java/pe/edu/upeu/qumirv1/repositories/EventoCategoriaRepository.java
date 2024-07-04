@@ -7,5 +7,5 @@ import pe.edu.upeu.qumirv1.models.EventoCategoria.EventoCategoriaId;
 
 @Repository
 public interface EventoCategoriaRepository extends JpaRepository<EventoCategoria, EventoCategoriaId> {
-    // Puedes añadir métodos personalizados si es necesario
+
 }
